@@ -96,10 +96,11 @@ class SpaceStation{
                 cout<<" - "<<itr->name<<" "<<" in "<<itr->module<<endl;
 
             }
+            
+            expday=day+1;
 
 
         }
-        expday=day+1;
 
         return;
 
@@ -131,6 +132,7 @@ class SpaceStation{
     }
 
     void handleEmergency(string module, string emergency){
+        cout<<"Emergency in "<<module<<" : "<<emergency<<endl;
 
         emergencymap[module]=emergency;
 
