@@ -76,6 +76,34 @@ class SpaceStation{
 
     }
 
+    void processExperiments(int day){
+        if(dayexpmap.find(day) == dayexpmap.end()){
+            cout<<"No experiment scheduled for day "<<day<<endl;
+        }else{
+            cout<<"Processing experiments for day "<<day<<endl;
+            for(auto itr:dayexpmap[day]){
+                cout<<" - "<<itr->name<<" "<<" in "<<itr->module<<endl;
+
+            }
+
+        }
+
+        return;
+
+    }
+
+    void printStatus(){
+        for(auto itr:modulemap){
+            cout<<itr.first<<" - "<<itr.second.size()<<endl;
+            for(auto astro:itr.second){
+                cout<<astro<<" -- "<<astromap[astro]->role<<endl;
+            }
+
+        }
+        return;
+
+    }
+
 
 
 
