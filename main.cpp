@@ -48,9 +48,15 @@ class SpaceStation{
 
     unordered_map<string,vector<ExperimentNode*>> moduleexpmap;
     unordered_map<int,vector<ExperimentNode*>> dayexpmap;
+    unordered_map<string,string> emergencymap;
+
+    int expday=1;
 
     void addAstronaut(string name,string role,string module){
-        if(modulemap[module].size() >= maxcapacity){
+        if(emergencymap.find(module) != emergencymap.end() ){
+            cout<<"cannot add astronaut "<<name<<" due to emergency"<<endl;
+        }
+        else if(modulemap[module].size() >= maxcapacity){
             cout<<module<<"is full, max capacity reached it cannot be added\n";
             
         }else{
@@ -67,6 +73,11 @@ class SpaceStation{
     }
 
     void scheduleExperiment(string expname,string module, int day){
+        if(emergencymap.find(module) != emergencymap.end()){
+            cout<<"cannot schedule experiment in "<<module<<" due to emergency \n";
+            return;
+        }
+
         ExperimentNode* newn=new ExperimentNode(expname,module,day);
         moduleexpmap[module].push_back(newn);
         dayexpmap[day].push_back(newn);
@@ -86,7 +97,9 @@ class SpaceStation{
 
             }
 
+
         }
+        expday=day+1;
 
         return;
 
@@ -103,6 +116,47 @@ class SpaceStation{
         return;
 
     }
+
+    vector<string> getAstronautsByRole(string role){
+        vector<string> result;
+
+        for(auto itr:astromap){
+            if(itr.second->role == role){
+                result.push_back(itr.first);
+            }
+
+        }
+        return result;
+
+    }
+
+    void handleEmergency(string module, string emergency){
+
+        emergencymap[module]=emergency;
+
+        cout<<"Astronauts in "<<module<<endl;
+        for(auto itr:modulemap[module]){
+            cout<<" - "<<itr<<endl;
+        }
+
+        int expcancel_cnt=0;
+        for(auto itr:dayexpmap[expday]){
+            if(itr->module ==module){
+                expcancel_cnt++;
+            } 
+
+        }
+
+        cout<<"Cancelled "<<expcancel_cnt<<" for "<<module<<" on day "<<expday;
+
+
+
+
+
+
+    }
+
+
 
 
 
