@@ -1,0 +1,51 @@
+Added astronaut Dr. Elena Chen to Greenhouse.
+Added astronaut Prof. Marco Rodriguez to Laboratory.
+Added astronaut Engineer Sarah Smith to Engineering.
+Added astronaut Dr. Arjun Patel to Habitat.
+Added astronaut Extra Crew 1 to Engineering.
+Added astronaut Extra Crew 2 to Engineering.
+Module Engineering is full. Cannot add astronaut Extra Crew 3.
+
+Scheduled experiment 'Plant Growth Zero-G' in Greenhouse on day 1.
+Scheduled experiment 'Quantum Entanglement' in Laboratory on day 1.
+Scheduled experiment 'Life Support Stress Test' in Engineering on day 2.
+Scheduled experiment 'Zero-G Bone Density' in Habitat on day 2.
+
+Processing experiments for day 1:
+ - Plant Growth Zero-G in Greenhouse
+ - Quantum Entanglement in Laboratory
+
+Processing experiments for day 2:
+ - Life Support Stress Test in Engineering
+ - Zero-G Bone Density in Habitat
+
+Processing experiments for day 3:
+ No experiments scheduled.
+
+--- Module Status ---
+Greenhouse (1/3 astronauts):
+ - Dr. Elena Chen (Botany)
+Laboratory (1/3 astronauts):
+ - Prof. Marco Rodriguez (Physics)
+Engineering (3/3 astronauts):
+ - Engineer Sarah Smith (Engineering)
+ - Extra Crew 1 (Engineering)
+ - Extra Crew 2 (Engineering)
+Habitat (1/3 astronauts):
+ - Dr. Arjun Patel (Medical)
+
+Astronauts with role 'Engineering':
+ - Engineer Sarah Smith
+ - Extra Crew 1
+ - Extra Crew 2
+
+*** EMERGENCY in Laboratory: Oxygen Leak ***
+Astronauts in Laboratory:
+ - Prof. Marco Rodriguez (Physics)
+Cancelled 0 experiment(s) in Laboratory scheduled for day 3.
+
+Cannot add astronaut New Astronaut to Laboratory: module under emergency!
+Cannot schedule experiment 'Emergency Research' in Laboratory: module under emergency!
+
+Processing experiments for day 5:
+ No experiments scheduled.
