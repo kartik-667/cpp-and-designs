@@ -4,8 +4,52 @@
 #include <unordered_map>
 #include <algorithm>
 
+#include<bits/stdc++.h>
 using namespace std;
 
+class AstronautNode{
+    public:
+    string name;
+    string module;
+    string role;
+
+    AstronautNode(string n,string r,string m){
+        name=n;
+        role=r;
+        module=m;
+    }
+
+};
+
+
+class SpaceStation{
+    public:
+
+    unordered_map<string,AstronautNode*> astromap;
+    unordered_map<string,vector<string>> modulemap; //modulename, and people
+    int maxcapacity=3;
+
+    void addAstronaut(string name,string role,string module){
+        if(modulemap[module].size() >= maxcapacity){
+            cout<<module<<"is full, max capacity reached it cannot be added\n";
+            
+        }else{
+            AstronautNode* newn=new AstronautNode(name,role,module);
+            astromap[name]=newn;
+            modulemap[module].push_back(name);
+            cout<<"Added "<<name<<"to "<<module<<endl;
+            
+            
+        }
+
+        return;
+
+    }
+
+
+
+
+};
 
 
 int main() {
