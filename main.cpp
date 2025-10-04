@@ -21,13 +21,33 @@ class AstronautNode{
 
 };
 
+class ExperimentNode{
+    public:
+    string name;
+    string module;
+    int day;
+
+    ExperimentNode(string n,string m, int d){
+        name=n;
+        module=m;
+        day=d;
+    }
+
+
+
+};
+
 
 class SpaceStation{
     public:
 
     unordered_map<string,AstronautNode*> astromap;
     unordered_map<string,vector<string>> modulemap; //modulename, and people
+
     int maxcapacity=3;
+
+    unordered_map<string,vector<ExperimentNode*>> moduleexpmap;
+    unordered_map<int,vector<ExperimentNode*>> dayexpmap;
 
     void addAstronaut(string name,string role,string module){
         if(modulemap[module].size() >= maxcapacity){
@@ -43,6 +63,16 @@ class SpaceStation{
         }
 
         return;
+
+    }
+
+    void scheduleExperiment(string expname,string module, int day){
+        ExperimentNode* newn=new ExperimentNode(expname,module,day);
+        moduleexpmap[module].push_back(newn);
+        dayexpmap[day].push_back(newn);
+        cout<<"Scheduled experiment "<<expname<<"in "<<module<<"on day "<<day<<endl;
+        return;
+
 
     }
 
