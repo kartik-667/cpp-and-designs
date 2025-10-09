@@ -10,6 +10,7 @@ class vehiclenode{
     bool isbanned;
     string junction;
     int load;
+    
 
     vehiclenode(string num,string type,string junc, int load){
         number=num;
@@ -18,6 +19,7 @@ class vehiclenode{
         isbanned=false;
         junction=junc;
         load=load;
+        
 
     }
 
@@ -33,13 +35,14 @@ class junctionnode{
     // unordered_set<vehiclenode*> vehicles; //we fetch it from vehicle maps
     string signal;
     int signaltime;
+    int bannedcount;
 
     junctionnode(string n,int maxi){
         name=n;
         maxload=maxi;
         currentload=0;
         signal="";
-
+        bannedcount=0;
         signaltime=0;
 
     }
@@ -54,6 +57,7 @@ class SmartCity{
 
     unordered_map<string,junctionnode*> junctionmap; //junc and its node
     unordered_map<string,vehiclenode*> vehiclemap;
+    set<int> signaltimes;
 
     SmartCity(){
         //make all junctions
@@ -121,6 +125,7 @@ class SmartCity{
                         if(v.second->violation>=3){
                             banned.insert(v.second);
                             junc->currentload-=v.second->load;
+                            junc->bannedcount++;
                         }
                         // allveh.push_back(v.second);
                     }
@@ -151,7 +156,51 @@ class SmartCity{
         }
 
     }
+
+    void removeVehicle(string junctionName, string vehicleNumber)
+    {
+        if(vehiclemap.find(vehicleNumber) == vehiclemap.end()){
+            return;
+        }
+        junctionnode* junc=junctionmap[junctionName];
+        vehiclenode* vehicle=vehiclemap[vehicleNumber];
+
+        int size=junc->vehiclesqueue.size();
+        for(int i=0;i<size;i++){
+            auto ele=junc->vehiclesqueue.front();
+            junc->vehiclesqueue.pop_front();
+            if(ele->number!=vehicleNumber){
+                junc->vehiclesqueue.push_back(ele);
+
+            }
+        }
+        vehiclemap.erase(vehicleNumber);
+        return;
+    }
+
+
     
+    void printSignals(int startTime, int endTime)
+    {
+        // unordered_map<int,vector<string>> mp; //time,junctionname
+        for(int i=startTime;i<=endTime;i++){
+
+            if(signaltimes.find(i) != signaltimes.end()){
+                cout<<"Time "<<i<<endl;
+                for(auto itr:junctionmap){
+                    if(itr.second->signaltime==i){
+                        cout<<itr.second->name<<endl;
+                    }
+                }
+
+            }
+        }
+        return;
+
+    }
+
+    
+
 
 
 
