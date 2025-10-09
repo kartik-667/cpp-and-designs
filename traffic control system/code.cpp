@@ -9,13 +9,15 @@ class vehiclenode{
     int violation;
     bool isbanned;
     string junction;
+    int load;
 
-    vehiclenode(string num,string type,string junc){
+    vehiclenode(string num,string type,string junc, int load){
         number=num;
         type=type;
         violation=0;
         isbanned=false;
         junction=junc;
+        load=load;
 
     }
 
@@ -27,17 +29,18 @@ class junctionnode{
     string name;
     int maxload;
     int currentload;
-    // deque<vehiclenode*> vehicles;
-    unordered_set<vehiclenode*> vehicles;
+    deque<vehiclenode*> vehiclesqueue;
+    // unordered_set<vehiclenode*> vehicles; //we fetch it from vehicle maps
     string signal;
     int signaltime;
 
-    junctionnode(string n,int maxi,string signal, int time){
+    junctionnode(string n,int maxi){
         name=n;
         maxload=maxi;
         currentload=0;
-        signal=signal;
-        signaltime=time;
+        signal="";
+
+        signaltime=0;
 
     }
 
@@ -48,6 +51,67 @@ class SmartCity{
 
     public:
     unordered_map<string,int> vehloads={{"Car",2},{"Bike",2},{"Bus",4},{"Truck",5}};
+
+    unordered_map<string,junctionnode*> junctionmap; //junc and its node
+    unordered_map<string,vehiclenode*> vehiclemap;
+
+    SmartCity(){
+        //make all junctions
+        junctionmap["Alpha"]=new junctionnode("Alpha",7);
+        junctionmap["Beta"]=new junctionnode("Beta",8);
+        junctionmap["Gamma"]=new junctionnode("Gamma",6);
+
+    }
+
+
+
+    bool enterJunction(string vehn,string type, string junc){
+        //if junc is not found then only make object
+        junctionnode* junction=NULL;
+
+        if(junctionmap.find(junc) != junctionmap.end()){
+            junction=junctionmap[junc];
+        }else{
+            return false;
+        }
+
+        if(junction->currentload + vehloads[type] > junction->maxload){
+            return false;// cant add vehicles
+
+        }else{
+            vehiclenode* newv=new vehiclenode(vehn,type,junc,vehloads[type]);
+            vehiclemap[vehn]=newv;
+            junction->vehiclesqueue.push_back(newv);
+            junction->currentload+=vehloads[type];
+        }
+
+        return true;
+
+
+        
+
+
+    }
+
+    void updateSignal(string junctionName, string signal, int time)
+    {
+        if(junctionmap.find(junctionName) == junctionmap.end()){
+            return;
+        }
+
+        junctionnode* junc=junctionmap[junctionName];
+        junc->signal=signal;
+        junc->signaltime=time;
+        return;
+
+
+    }
+
+    void checkViolations(){
+        
+    }
+
+
 
 
 
