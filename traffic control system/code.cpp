@@ -199,7 +199,18 @@ class SmartCity{
 
     }
 
-    
+     void printStatus()
+    {
+        for(auto itr:junctionmap){
+            cout<<"Junction name- "<<itr.first<<endl;
+            cout<<"Current load- "<<itr.second->currentload<<endl;
+            cout<<"Active vehicle- "<<itr.second->vehiclesqueue.size()<<endl;
+            cout<<"Banned vehicles - "<<itr.second->bannedcount<<endl;
+            cout<<endl;
+        }
+    }
+
+
 
 
 
