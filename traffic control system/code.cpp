@@ -108,8 +108,50 @@ class SmartCity{
     }
 
     void checkViolations(){
-        
+        //for each junction
+        for(auto itr:junctionmap){
+            junctionnode* junc=itr.second;
+            if(junc->signal=="RED"){
+                //get all vehicles
+                // vector<vehiclenode banned;
+                unordered_set<vehiclenode*> banned;
+                for(auto& v:vehiclemap){
+                    if(v.second->junction==itr.first){
+                        v.second->violation++;
+                        if(v.second->violation>=3){
+                            banned.insert(v.second);
+                            junc->currentload-=v.second->load;
+                        }
+                        // allveh.push_back(v.second);
+                    }
+                }
+                //now remove banned vehicles
+                int qsize=junc->vehiclesqueue.size();
+                for(int i=0;i<qsize;i++){
+                    auto ele=junc->vehiclesqueue.front();
+                    junc->vehiclesqueue.pop_front();
+                    if(banned.find(ele) == banned.end()){
+                        //push unbanned again in queue
+                        junc->vehiclesqueue.push_back(ele);
+                    }
+
+                }
+                for(auto itr:banned){
+                    vehiclemap.erase(itr->number);
+                }
+
+
+
+
+            }else{
+                continue; //go for next junc
+            }
+
+
+        }
+
     }
+    
 
 
 
