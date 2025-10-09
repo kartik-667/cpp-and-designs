@@ -1,0 +1,61 @@
+Enrolled students: 11
+Harry : true 1
+Fred : false 0
+George : false 0
+Ginny : false 0
+Maddie : false 1
+Ron : true 0
+Seamus : true 0
+Dean : false 0
+Hermione : false 0
+Draco : false 0
+Lavender : false 0
+House: Seekers
+Health: 100
+Students: 0
+Total Spells: 4
+Correct Spells: 3
+Wrong Spells: 1
+Accuracy: 75%
+House: Keepers
+Health: 100
+Students: 3
+Total Spells: 3
+Correct Spells: 1
+Wrong Spells: 2
+Accuracy: 33%
+House: Chasers
+Health: 70
+Students: 1
+Total Spells: 3
+Correct Spells: 2
+Wrong Spells: 1
+Accuracy: 66%
+House: Beaters
+Health: 90
+Students: 2
+Total Spells: 3
+Correct Spells: 2
+Wrong Spells: 1
+Accuracy: 66%
+Day 2:
+Seekers: wow (Strength: 100)
+Keepers: 
+Chasers: spelleps (Strength: 20)
+Beaters: accicca (Strength: 40)
+Day 3:
+Seekers: 
+Keepers: eve (Strength: 60)
+Chasers: racecar (Strength: 20)
+Beaters: 
+Day 4:
+Seekers: wwwowww (Strength: 80)
+Keepers:
+Chasers:
+Beaters:
+Ron : true 0
+Seamus : true 0
+Dean : false 0
+Hermione : false 0
+Draco : false 0
+Lavender : false 0

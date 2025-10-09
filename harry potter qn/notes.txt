@@ -1,0 +1,25 @@
+class for student - contains  name , bool isExiled, bool isPromoted,
+int exilecount
+
+constructor call-
+hashmap<housename,houseobject> to store all 4 houses objects we have (size 4 only)
+
+
+
+class for house- housename, correctspell and wrongspell count, currhealth, maxhealth, vector<student node>, vector<spells> node, int trait
+
+
+
+spellnode class- name,day,house,strength, bool validspell
+ - we can make a checkpalindrome function to check for validspell and mark the flag
+
+
+
+hashmap<day, spellname>
+
+for promotion function - we just find first unpromoted student from vector and promote it 
+
+for exile- first we check,then we remove student from vector
+
+
+
