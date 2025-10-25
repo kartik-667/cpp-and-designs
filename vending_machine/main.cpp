@@ -42,6 +42,16 @@ class payment_state:public state{
 
 };
 
+class refund:public state{
+    public:
+     string name;
+
+    refund(){
+        this->name="refund";
+    }
+
+};
+
 class item{
     public:
     string name;
@@ -61,7 +71,9 @@ class item{
 class payment_interface{
     public:
 
-    virtual void pay() =0; //pure virtual fnc - abstract function
+    virtual bool pay(int total, int amountbyuser) =0; //pure virtual fnc - abstract function
+
+    virtual void refund()=0;
 
 
 };
@@ -69,8 +81,23 @@ class payment_interface{
 class pay_coins : public payment_interface{
     public:
 
-    void pay(){
+    bool pay(int total,int amountbyuser){
+
         cout<<"paying with coins \n";
+        if(total > amountbyuser){
+            cout<<"not sufficient money found \n";
+            return false;
+
+
+        }else{
+            cout<<"payment successful\n";
+            return true;
+        }
+    }
+
+    void refund(){
+        cout<<"refunding the coins...\n";
+
     }
 
 
@@ -78,8 +105,23 @@ class pay_coins : public payment_interface{
 
 class pay_card:public payment_interface{
     public:
-    void pay(){
+    bool pay(int total,int amountbyuser){
         cout<<"paying with card \n";
+        if(total > amountbyuser){
+            cout<<"not sufficient money found \n";
+            return false;
+
+
+        }else{
+            cout<<"payment successful\n";
+            return true;
+        }
+
+
+    }
+
+    void refund(){
+        cout<<"cancelling the card transactions...\n";
     }
 
 };
@@ -94,10 +136,12 @@ class vending_machine{
     unordered_map<string,int> items_selected;
 
     int balance;
+
     state* currstate;
     idle* idlestate;
     product_selection* product_selectionstate;
     payment_state* paymentstate;
+    refund* refundstate;
 
 
     pay_coins* paywithcoins;
@@ -113,6 +157,7 @@ class vending_machine{
         idlestate=new idle();
         product_selectionstate=new product_selection();
         paymentstate=new payment_state();
+        refundstate=new refund();
         currstate=idlestate;
 
         paywithcard=new pay_card();
@@ -174,11 +219,58 @@ class vending_machine{
 
 
             }
-            
+
 
             cout<<"Enter *card* or *coin* as payment method \n";
             if(method=="card"){
-                paywithcard->pay();
+                cout<<"enter your card amount\n";
+                int temp;
+                cin>>temp;
+                bool result=paywithcard->pay(amount,temp);
+                if(!result){
+                    //make refund
+                    currstate=refundstate;
+                    
+
+
+                }else{
+                    //on success reduce the item from stock as well
+                    for(auto itr:items_selected){
+                        string curr=itr.first;
+                        for(auto i:items){
+                            if(i->name==itr.first){
+                                i->stock-=itr.second;
+                            }
+                            break;
+                        }
+                        
+
+                    }
+                    currstate=dispensestate;
+
+                }
+            }else if(method=="coin"){
+                cout<<"enter your coins\n";
+                int temp;
+                cin>>temp;
+
+                bool result=paywithcoins->pay(amount,temp);
+                if(!result){
+                    currstate=refundstate;
+                }else{
+                      for(auto itr:items_selected){
+                        string curr=itr.first;
+                        for(auto i:items){
+                            if(i->name==itr.first){
+                                i->stock-=itr.second;
+                            }
+                            break;
+                        }
+                        
+
+                    }
+                }
+
             }
 
         }
