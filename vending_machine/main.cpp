@@ -313,6 +313,7 @@ public:
 
 int main()
 {
+    cout<<"this is a vending machine code"<<endl;
 
     return 0;
 }
