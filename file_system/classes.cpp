@@ -26,6 +26,10 @@ class file{
 
     }
 
+    file* getparent(){
+        return parent;
+    }
+
     string getdata(){
         return data;
         // cout<<data;
@@ -40,6 +44,10 @@ class file{
         
         parent->linkedfiles.push_back(this);
         parent->linkcnt++;
+    }
+
+    vector<file*> getallLinks(){
+        return linkedfiles;
     }
 
 };
@@ -220,13 +228,49 @@ class filesystem{
         return;
         
 
+    }
 
+    void appendLinkFile(string path,string data){
+        //so we need to update all ref of parent file
+        vector<string> arr=splitPath(path);
+        auto curr=root;
+        for(int i=0;i<arr.size()-1;i++){
+            if(curr->getDirectory(arr[i])){
+                curr=curr->getDirectory(arr[i]);
+            }else{
+                cout<<"file/folder not found \n";
+                return;
+            }
+        }
 
+        file* f=curr->getFile(arr.back());
+        if(!f){
+            cout<<"file/folder not found \n";
+            return;
+        }
 
+        file* parent=f->getparent();
+        bool setparent=false;
+        if(parent){
+            for(auto& itr:parent->getallLinks()){
+                string olddata=itr->getdata();
+                string newdata=olddata + "\n" + data;
+                if(setparent==false){
+                    parent->setdata(newdata);
+                    setparent=true;
+                }
+                itr->setdata(olddata);
+            }
+
+        }
+        return;
+
+       
+        
     }
 
 
 
 
 
-}
+};
