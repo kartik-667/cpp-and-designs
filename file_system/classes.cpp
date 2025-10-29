@@ -10,6 +10,9 @@ class file{
     vector<file*> linkedfiles={};
     // string extension;
 
+
+    
+
     public:
 
     file(string name){
@@ -34,6 +37,9 @@ class file{
 
     void setParent(file* &parent){
         this->parent=parent;
+        
+        parent->linkedfiles.push_back(this);
+        parent->linkcnt++;
     }
 
 };
