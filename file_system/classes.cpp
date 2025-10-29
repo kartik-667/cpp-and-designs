@@ -20,8 +20,9 @@ class file{
 
     }
 
-    void getdata(){
-        cout<<data;
+    string getdata(){
+        return data;
+        // cout<<data;
     }
 
     void setdata(string newdata){
@@ -109,13 +110,16 @@ class filesystem{
         root=new directory("/");
     }
 
-    bool addfile(string path){
+    void addfile(string path){
         vector<string> arr=splitPath(path);
         directory* curr=root; //this holds parent
+
         for(int i=0;i<arr.size()-1;i++){
             if(curr->getDirectory(arr[i]) ==NULL ){
                 //create a new directory
                 curr->addSubDirectory(arr[i]);
+                curr=curr->getDirectory(arr[i]);
+            }else{
                 curr=curr->getDirectory(arr[i]);
             }
         }
@@ -126,9 +130,41 @@ class filesystem{
             curr->addFile(filename);
 
         }
-        return true;
+        return ;
 
        
+    }
+
+    bool appendFile(string path,string data){
+        vector<string> arr=splitPath(path);
+
+        directory* curr=root;
+        for(int i=0;i<arr.size()-1;i++){
+            if(curr->getDirectory(arr[i])){
+                curr=curr->getDirectory(arr[i]);
+            }else{
+                //foldern doesnt exist
+                cout<<"file doesnt exist \n";
+                return false;
+            }
+        }
+
+        if(curr->getFile(arr[arr.size()-1])){
+            file* file=curr->getFile(arr[arr.size()-1]);
+            string currdata=file->getdata();
+            string newdata=currdata + "\n" + data;
+            file->setdata(newdata);
+            return true;
+
+
+        }else{
+             cout<<"file doesnt exist \n";
+                return false;
+
+        }
+
+
+
     }
 
 
