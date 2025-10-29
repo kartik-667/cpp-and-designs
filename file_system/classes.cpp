@@ -5,6 +5,9 @@ class file{
     private:
     string name;
     string data;
+    int linkcnt=0;
+    file* parent=NULL; //incase of linked files
+    vector<file*> linkedfiles={};
     // string extension;
 
     public:
@@ -27,6 +30,10 @@ class file{
 
     void setdata(string newdata){
         this->data=newdata;
+    }
+
+    void setParent(file* &parent){
+        this->parent=parent;
     }
 
 };
@@ -144,7 +151,7 @@ class filesystem{
                 curr=curr->getDirectory(arr[i]);
             }else{
                 //foldern doesnt exist
-                cout<<"file doesnt exist \n";
+                cout<<"folder/file doesnt exist \n";
                 return false;
             }
         }
@@ -162,6 +169,51 @@ class filesystem{
                 return false;
 
         }
+
+
+
+    }
+
+    void createLinkedFile(string oldpath, string newpath){
+        //get oldfile first;
+        vector<string> arr=splitPath(oldpath);
+        directory* curr=root;
+        for(int i=0;i<arr.size()-1;i++){
+            if(curr->getDirectory(arr[i])){
+                curr=curr->getDirectory(arr[i]);
+            }else{
+                //foldern doesnt exist
+                cout<<"folder/file doesnt exist \n";
+                return;
+            }
+        }
+
+        file* oldfile=curr->getFile(arr[arr.size()-1]);
+        if(!oldfile){
+            cout<<"root file doesnt exist\n";
+            return;
+        }
+
+        //now for new file
+        vector<string> news=splitPath(newpath);
+        curr=root;
+
+        for(int i=0;i<news.size()-1;i++){
+            if(curr->getDirectory(news[i])){
+                curr=curr->getDirectory(news[i]);
+            }else{
+                //make a new folder
+                curr->addSubDirectory(news[i]);
+                curr=curr->getDirectory(news[i]);
+            }
+
+        }
+
+        file* newfile=new file(newpath,oldfile->getdata());
+        newfile->setParent(oldfile);
+        return;
+        
+
 
 
 
