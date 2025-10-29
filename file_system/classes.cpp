@@ -9,6 +9,11 @@ class file{
 
     public:
 
+    file(string name){
+        this->name=name;
+        this->data="";
+    }
+
     file(string name,string data){
         this->name=name;
         this->data=data;
@@ -56,10 +61,44 @@ class directory{
         return NULL;
     }
 
+    void addSubDirectory(string name){
+        if(subdirectories.find(name) == subdirectories.end()){
+            subdirectories[name]=new directory(name);
+
+        }
+        return;
+    }
+
+    void addFile(string name){
+        if(files.find(name) == files.end()){
+            files[name]=new file(name);
+
+
+        }
+        return ;
+    }
+
 };
 
 class filesystem{
     private:
+
+    vector<string> splitPath(string path){
+        stringstream ss(path);
+        vector<string> arr;
+        string word;
+
+        while(getline(ss,word,'/')){
+            if(!word.empty()){
+                arr.push_back(word);
+
+            }
+        }
+        return arr;
+
+    }
+
+    
 
     directory* root;
 
@@ -68,6 +107,28 @@ class filesystem{
 
     filesystem(){
         root=new directory("/");
+    }
+
+    bool addfile(string path){
+        vector<string> arr=splitPath(path);
+        directory* curr=root; //this holds parent
+        for(int i=0;i<arr.size()-1;i++){
+            if(curr->getDirectory(arr[i]) ==NULL ){
+                //create a new directory
+                curr->addSubDirectory(arr[i]);
+                curr=curr->getDirectory(arr[i]);
+            }
+        }
+
+        //now add file
+        string filename=arr[arr.size()-1];
+        if(curr->getFile(filename)==NULL){
+            curr->addFile(filename);
+
+        }
+        return true;
+
+       
     }
 
 
