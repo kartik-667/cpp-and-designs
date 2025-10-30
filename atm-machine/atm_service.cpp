@@ -43,7 +43,12 @@ class atm_machine{
     double getBalance(){
         if(currstate == state::PINVERIFIED){
             return accounts[currentcard->getAccountno()]->showBalance();
+        }else{
+            cout<<"Please verify pin first";
+            return 0.0;
         }
+
+        
     }
 
     void addAccount(string name,int accno, double balance){
@@ -101,12 +106,18 @@ class atm_machine{
             auto account=accounts[currentcard->getAccountno()];
             account->deposit(money);
             cout<<"transaction successful \n";
-
+            
         }else if(trans == transaction::WITHDRAW){
             //withdraw cash
+            auto account=accounts[currentcard->getAccountno()];
+            if(money > account->showBalance()){
+                cout<<"balance not sufficient \n";
+                return;
+            }
             bool res=inventory->perform_transaction(money);
             if(res){
                 cout<<"transaction successful \n";
+                account->processtransaction(money);
             }else{
                 cout<<"transaction valid, invalid balance in acc/atm \n";
             }

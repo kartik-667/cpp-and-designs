@@ -43,33 +43,33 @@ class account{
     double balance;
 
     protected:
-    void processtransaction(int amount){
-        balance-=amount;
-    }
-
-
+    
+    
     public:
     string name;
-
+    
     account(){
-
+        
     }
-
+    
     account(string n, int acc, double bal){
         this->accountno=acc;
         this->name=n;
         this->balance=bal;
     }
     
-
+    
     double showBalance(){
         return balance;
     }
-
+    
     void deposit(double money){
         this->balance+=money;
     }
-
+    
+    void processtransaction(double amount){
+        this->balance-=amount;
+    }
 
 
     
@@ -83,7 +83,7 @@ class atm_inventory : protected account{
     public:
 
     atm_inventory(){
-        freq[100]=100;
+        freq[1000]=100;
         freq[500]=90;
         freq[100]=80;
         freq[50]=50;
@@ -91,35 +91,75 @@ class atm_inventory : protected account{
 
     }
     //checks balance and perform transaction
-    bool perform_transaction(double amount){
-        double amt=amount;
-        vector<pair<int,int>> temp;
+    // bool perform_transaction(double amount){
+    //     double amt=amount;
+    //     vector<pair<int,int>> temp;
 
-        for(int i=0;i<notes.size();i++){
-            if(notes[i] >=amt){
-                int t=notes[i]/amt;
-                if(t>0){
-                    temp.push_back({notes[i],t});
-                    amt=amt - (notes[i]*t);
-                }
+    //     for(int i=0;i<notes.size();i++){
+    //         if(notes[i] <=amt){
+    //             int t=notes[i]/amt;
+    //             if(t>0){
+    //                 temp.push_back({notes[i],t});
+    //                 amt=amt - (notes[i]*t);
+    //             }
 
-            }
+    //         }
+    //     }
+
+    //     if(amt>0){
+    //         return false; //not sufficient balance
+    //     }else{
+    //         //dispense the cash
+    //         for(auto itr:temp){
+    //             freq[itr.first]-=itr.second;
+    //         }
+    //     }
+    //     account::processtransaction(amount); //so this fnc is protected, so cant access outside the class also
+
+    //     return true;
+
+
+
+    // }
+
+    bool perform_transaction(double amount) {
+    double amt = amount;
+    vector<pair<int,int>> temp;
+
+    for (int note : notes) {
+        int available = freq[note];
+        int needed = amt / note;
+        int use = min(needed, available);
+
+        if (use > 0) {
+            temp.push_back({note, use});
+            amt -= note * use;
         }
+    }
 
-        if(amt>0){
-            return false; //not sufficient balance
-        }else{
-            //dispense the cash
-            for(auto itr:temp){
-                freq[itr.first]-=itr.second;
-            }
-        }
-        account::processtransaction(amount); //so this fnc is protected, so cant access outside the class also
+    if (amt > 0) {
+        cout << " Cannot dispense exact amount with available notes.\n";
+        return false;
+    }
 
-        return true;
+    // Deduct notes
+    for (auto itr : temp){
 
+        freq[itr.first] -= itr.second;
+    }
 
+    cout << " Dispensed: \n";
+    for (auto itr : temp){
+        cout << itr.first << " x " << itr.second << "\n";
 
     }
+
+
+    // You can later integrate account deduction here
+    // acc.processtransaction(amount);
+
+    return true;
+}
+
 
 };
