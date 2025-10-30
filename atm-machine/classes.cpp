@@ -17,9 +17,23 @@ class card{
         this->accountno=acc;
     }
 
-    int getpin(){
-        return this->pin ;
-    } 
+    int getAccountno(){
+        return accountno;
+    }
+
+    bool authenticatePin(int pin){
+        if(this->pin != pin){
+            return false;
+        }
+        return true;
+
+    }
+
+    // int getpin(){
+    //     return this->pin ;
+    // } 
+
+
 
 };
 
@@ -27,19 +41,41 @@ class account{
     private:
     int accountno;
     double balance;
+
+    protected:
+    void processtransaction(int amount){
+        balance-=amount;
+    }
+
+
     public:
     string name;
+
+    account(){
+
+    }
 
     account(string n, int acc, double bal){
         this->accountno=acc;
         this->name=n;
         this->balance=bal;
     }
+    
+
+    double showBalance(){
+        return balance;
+    }
+
+    void deposit(double money){
+        this->balance+=money;
+    }
+
+
 
     
 };
 
-class atm_inventory{
+class atm_inventory : protected account{
     private:
     vector<int> notes={1000,500,100,50,10};
     unordered_map<int,int> freq; //store notes counts
@@ -78,6 +114,8 @@ class atm_inventory{
                 freq[itr.first]-=itr.second;
             }
         }
+        account::processtransaction(amount); //so this fnc is protected, so cant access outside the class also
+
         return true;
 
 
