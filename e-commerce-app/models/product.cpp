@@ -4,17 +4,25 @@ using namespace std;
 class product{
     private:
     int id;
-    int stock;
     double price;
-
+    int stock;
+    
     public:
     string name;
 
-    product(int id, int st, int price,string nm){
+    product(int id, int st, double price,string nm){
         id=id;
         stock=st;
         price=price;
         name=nm;
+    }
+
+    void setstock(int n){
+        this->stock+=n;
+    }
+
+    void setprice(double p){
+        this->price=p;
     }
 
 
