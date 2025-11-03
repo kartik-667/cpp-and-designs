@@ -21,6 +21,15 @@ class buyerservice{
 
     }
 
+    void registerBuyer(string n, int pin, int bid){
+        buyrepo->registerBuyer(n,pin,bid); 
+    }
+
+    bool findBuyer(string name){
+        return buyrepo->findBuyer(name);
+
+    }
+
 
 
 };
