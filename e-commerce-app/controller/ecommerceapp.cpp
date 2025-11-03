@@ -15,7 +15,25 @@ class ecommerceapp{
 
     public:
 
+    ecommerceapp(){
+    buyer_repository* buyerrepo=new buyer_repository();
+    pincode_repository* pincoderepo=new pincode_repository();
+    product_repository* productrepo=new product_repository();
+
+    //services
+    buyerservice* buyer_service=new buyerservice(buyerrepo);
+    pincodeservice* pincode_service=new pincodeservice(pincoderepo);
+    productservice* product_service=new productservice(productrepo);
+
+    this->buyer_service=buyer_service;
+        this->pincode_service=pincode_service;
+        this->product_service=product_service;
+
+
+    }
+
     ecommerceapp(buyerservice* b,pincodeservice* pinc,productservice* p){
+        
         buyer_service=b;
         pincode_service=pinc;
         product_service=p;

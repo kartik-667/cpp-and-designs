@@ -13,6 +13,7 @@ class buyer_repository{
     void registerBuyer(string n, int pin, int bid){
         if(buyers.find(n) == buyers.end()){
             buyers[n]= new buyer(n,pin,bid);
+            cout<<n<<" has been added as user\n"; 
         }else{
             cout<<"buyer already exist \n";
         }
