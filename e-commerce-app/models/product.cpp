@@ -29,6 +29,10 @@ class product{
         return stock;
     }
 
+    void updatestock(int n){
+        this->stock-=n;
+    }
+
 
 };
 

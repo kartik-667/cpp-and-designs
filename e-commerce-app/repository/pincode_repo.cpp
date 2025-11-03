@@ -10,6 +10,7 @@ class pincode_repository{
     public:
     void addPincode(int pin){
         pincodes.insert(pin);
+        cout<<pin<<" has been added \n";
     }
 
     bool isServicableatPin(int pin){

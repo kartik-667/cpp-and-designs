@@ -7,18 +7,14 @@ class product_repository{
 
     unordered_map<string,product*> storage;
 
-    void updateProductRepo(string name,int quantity){
-        storage[name]-=quantity;
-
-    }
-
+    
     public:
-
+    
     void additem(string name,double price,int id,int quantity){
         if(storage.find(name) == storage.end()){
             storage[name]=new product(id,quantity,price,name);
-
-
+            
+            
         }else{
             //update product
             auto prod=storage[name];
@@ -26,14 +22,18 @@ class product_repository{
             prod->setstock(quantity);
             
         }
+        
+    }
+    void updateProductRepo(string name,int quantity){
+        storage[name]->updatestock(quantity);
 
     }
-
+    
     bool checkStock(string prodname, int quantity){
         if(storage.find(prodname) != storage.end()){
             if(storage[prodname]->getstock() >= quantity){
                 //update stock as well
-                updateProductRepo(prodname,quantity);
+                // updateProductRepo(prodname,quantity);
                 return true;
             };
         }

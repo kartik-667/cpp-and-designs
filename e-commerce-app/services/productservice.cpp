@@ -6,6 +6,7 @@ class productservice{
     private:
     product_repository* products;
 
+   
     
 
     public:
@@ -19,7 +20,10 @@ class productservice{
     }
 
     bool checkStock(string prodname, int quantity){
-       return products->checkStock(prodname,quantity);
+       bool temp= products->checkStock(prodname,quantity);
+       if(temp){
+        products->updateProductRepo(prodname,quantity);
+       }
     }
     int getStock(string name){
         return products->getStock(name);
