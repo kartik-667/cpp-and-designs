@@ -2,6 +2,10 @@
 using namespace std;
 #include "./controller/ecommerceapp.cpp"
 
+// important-- 1. to compile using g++ --> g++ main.cpp -o main
+// 2. then run main.exe in terminal
+
+
 int main(){
     cout<<"ecommerce app LLD"<<endl;
     //lets initialize the repo, service and then controller
