@@ -25,6 +25,10 @@ class product{
         this->price=p;
     }
 
+    int getstock(){
+        return stock;
+    }
+
 
 };
 

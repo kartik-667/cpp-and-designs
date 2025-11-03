@@ -24,6 +24,13 @@ class product_repository{
 
     }
 
+    bool checkStock(string prodname, int quantity){
+        if(storage.find(prodname) != storage.end()){
+            if(storage[prodname]->getstock() >= quantity) return true;
+        }
+        return false;
+    }
+
 
 
 };

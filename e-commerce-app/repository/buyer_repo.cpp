@@ -19,5 +19,10 @@ class buyer_repository{
         return;
     }
 
+    bool findBuyer(string name){
+        if(buyers.find(name) != buyers.end()) return true;
+        return false;
+    }
+
 
 };
